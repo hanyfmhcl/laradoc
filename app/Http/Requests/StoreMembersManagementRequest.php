@@ -25,6 +25,14 @@ class StoreMembersManagementRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'hajji_no' => [
+                'string',
+                'required',
+            ],
+            'national_id_card_no' => [
+                'string',
+                'required',
+            ],
             'full_name' => [
                 'string',
                 'required',
@@ -33,14 +41,6 @@ class StoreMembersManagementRequest extends FormRequest
                 'integer',
                 'min:-2147483648',
                 'max:2147483647',
-                'required',
-            ],
-            'hajji_no' => [
-                'string',
-                'required',
-            ],
-            'national_id_card_no' => [
-                'string',
                 'required',
             ],
         ];

@@ -35,6 +35,8 @@ class DocumentController extends Controller
     {
         abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $document->load('owner');
+
         return view('admin.document.show', compact('document'));
     }
 }

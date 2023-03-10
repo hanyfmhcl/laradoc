@@ -38,6 +38,8 @@ class MembersManagementController extends Controller
     {
         abort_if(Gate::denies('members_management_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $membersManagement->load('owner');
+
         return view('admin.members-management.show', compact('membersManagement'));
     }
 

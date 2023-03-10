@@ -50,6 +50,16 @@
             {{ trans('cruds.user.fields.locale_helper') }}
         </div>
     </div>
+    <div class="form-group {{ $errors->has('user.mobile_number') ? 'invalid' : '' }}">
+        <label class="form-label required" for="mobile_number">{{ trans('cruds.user.fields.mobile_number') }}</label>
+        <input class="form-control" type="text" name="mobile_number" id="mobile_number" required wire:model.defer="user.mobile_number">
+        <div class="validation-message">
+            {{ $errors->first('user.mobile_number') }}
+        </div>
+        <div class="help-block">
+            {{ trans('cruds.user.fields.mobile_number_helper') }}
+        </div>
+    </div>
 
     <div class="form-group">
         <button class="btn btn-indigo mr-2" type="submit">

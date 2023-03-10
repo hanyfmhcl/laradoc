@@ -152,95 +152,31 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 36,
-                'title' => 'basic_c_r_m_access',
-            ],
-            [
-                'id'    => 37,
-                'title' => 'crm_status_create',
-            ],
-            [
-                'id'    => 38,
-                'title' => 'crm_status_edit',
-            ],
-            [
-                'id'    => 39,
-                'title' => 'crm_status_show',
-            ],
-            [
-                'id'    => 40,
-                'title' => 'crm_status_delete',
-            ],
-            [
-                'id'    => 41,
-                'title' => 'crm_status_access',
-            ],
-            [
-                'id'    => 42,
-                'title' => 'crm_customer_create',
-            ],
-            [
-                'id'    => 43,
-                'title' => 'crm_customer_edit',
-            ],
-            [
-                'id'    => 44,
-                'title' => 'crm_customer_show',
-            ],
-            [
-                'id'    => 45,
-                'title' => 'crm_customer_delete',
-            ],
-            [
-                'id'    => 46,
-                'title' => 'crm_customer_access',
-            ],
-            [
-                'id'    => 47,
-                'title' => 'crm_note_create',
-            ],
-            [
-                'id'    => 48,
-                'title' => 'crm_note_edit',
-            ],
-            [
-                'id'    => 49,
-                'title' => 'crm_note_show',
-            ],
-            [
-                'id'    => 50,
-                'title' => 'crm_note_delete',
-            ],
-            [
-                'id'    => 51,
-                'title' => 'crm_note_access',
-            ],
-            [
-                'id'    => 52,
-                'title' => 'crm_document_create',
-            ],
-            [
-                'id'    => 53,
-                'title' => 'crm_document_edit',
-            ],
-            [
-                'id'    => 54,
-                'title' => 'crm_document_show',
-            ],
-            [
-                'id'    => 55,
-                'title' => 'crm_document_delete',
-            ],
-            [
-                'id'    => 56,
-                'title' => 'crm_document_access',
-            ],
-            [
-                'id'    => 57,
                 'title' => 'audit_log_show',
             ],
             [
-                'id'    => 58,
+                'id'    => 37,
                 'title' => 'audit_log_access',
+            ],
+            [
+                'id'    => 38,
+                'title' => 'trip_create',
+            ],
+            [
+                'id'    => 39,
+                'title' => 'trip_edit',
+            ],
+            [
+                'id'    => 40,
+                'title' => 'trip_show',
+            ],
+            [
+                'id'    => 41,
+                'title' => 'trip_delete',
+            ],
+            [
+                'id'    => 42,
+                'title' => 'trip_access',
             ],
         ];
 

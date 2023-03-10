@@ -22,7 +22,11 @@
                 </div>
             </div>
 
-
+            <form class="mt-6 mb-4 md:hidden">
+                <div class="mb-3 pt-0">
+                    @livewire('global-search')
+                </div>
+            </form>
 
             <!-- Divider -->
             <div class="flex md:hidden">
@@ -90,7 +94,7 @@
                 @endcan
                 @can('member_access')
                     <li class="items-center">
-                        <a class="has-sub {{ request()->is("admin/members-managements*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#" onclick="window.openSubNav(this)">
+                        <a class="has-sub {{ request()->is("admin/members-managements*")||request()->is("admin/trips*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#" onclick="window.openSubNav(this)">
                             <i class="fa-fw fas c-sidebar-nav-icon fa-cogs">
                             </i>
                             {{ trans('cruds.member.title') }}
@@ -102,6 +106,15 @@
                                         <i class="fa-fw c-sidebar-nav-icon fas fa-cogs">
                                         </i>
                                         {{ trans('cruds.membersManagement.title') }}
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('trip_access')
+                                <li class="items-center">
+                                    <a class="{{ request()->is("admin/trips*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.trips.index") }}">
+                                        <i class="fa-fw c-sidebar-nav-icon fas fa-cogs">
+                                        </i>
+                                        {{ trans('cruds.trip.title') }}
                                     </a>
                                 </li>
                             @endcan
@@ -144,53 +157,6 @@
                             </i>
                             {{ trans('cruds.systemCalendar.title') }}
                         </a>
-                    </li>
-                @endcan
-                @can('basic_c_r_m_access')
-                    <li class="items-center">
-                        <a class="has-sub {{ request()->is("admin/crm-statuses*")||request()->is("admin/crm-customers*")||request()->is("admin/crm-notes*")||request()->is("admin/crm-documents*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="#" onclick="window.openSubNav(this)">
-                            <i class="fa-fw fas c-sidebar-nav-icon fa-briefcase">
-                            </i>
-                            {{ trans('cruds.basicCRM.title') }}
-                        </a>
-                        <ul class="ml-4 subnav hidden">
-                            @can('crm_status_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/crm-statuses*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.crm-statuses.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-folder">
-                                        </i>
-                                        {{ trans('cruds.crmStatus.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('crm_customer_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/crm-customers*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.crm-customers.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-user-plus">
-                                        </i>
-                                        {{ trans('cruds.crmCustomer.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('crm_note_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/crm-notes*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.crm-notes.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-sticky-note">
-                                        </i>
-                                        {{ trans('cruds.crmNote.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('crm_document_access')
-                                <li class="items-center">
-                                    <a class="{{ request()->is("admin/crm-documents*") ? "sidebar-nav-active" : "sidebar-nav" }}" href="{{ route("admin.crm-documents.index") }}">
-                                        <i class="fa-fw c-sidebar-nav-icon fas fa-folder">
-                                        </i>
-                                        {{ trans('cruds.crmDocument.title') }}
-                                    </a>
-                                </li>
-                            @endcan
-                        </ul>
                     </li>
                 @endcan
 

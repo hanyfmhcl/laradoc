@@ -37,12 +37,22 @@
                         </tr>
                         <tr>
                             <th>
-                                {{ trans('cruds.doc.fields.doc_type') }}
+                                {{ trans('cruds.doc.fields.trip_type') }}
                             </th>
                             <td>
-                                @if($doc->docType)
-                                    <span class="badge badge-relationship">{{ $doc->docType->type ?? '' }}</span>
-                                @endif
+                                @foreach($doc->tripType as $key => $entry)
+                                    <span class="badge badge-relationship">{{ $entry->trip_type }}</span>
+                                @endforeach
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>
+                                {{ trans('cruds.doc.fields.doctype') }}
+                            </th>
+                            <td>
+                                @foreach($doc->doctype as $key => $entry)
+                                    <span class="badge badge-relationship">{{ $entry->type }}</span>
+                                @endforeach
                             </td>
                         </tr>
                         <tr>
@@ -55,18 +65,6 @@
                                         <i class="far fa-file">
                                         </i>
                                         {{ $entry['file_name'] }}
-                                    </a>
-                                @endforeach
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {{ trans('cruds.doc.fields.photo') }}
-                            </th>
-                            <td>
-                                @foreach($doc->photo as $key => $entry)
-                                    <a class="link-photo" href="{{ $entry['url'] }}">
-                                        <img src="{{ $entry['preview_thumbnail'] }}" alt="{{ $entry['name'] }}" title="{{ $entry['name'] }}">
                                     </a>
                                 @endforeach
                             </td>
