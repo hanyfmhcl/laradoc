@@ -5,12 +5,17 @@ namespace App\Http\Livewire\Doc;
 use App\Models\Doc;
 use App\Models\Document;
 use App\Models\MembersManagement;
+use App\Models\Trip;
 use Livewire\Component;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Edit extends Component
 {
     public Doc $doc;
+
+    public array $doctype = [];
+
+    public array $trip_type = [];
 
     public array $mediaToRemove = [];
 
@@ -52,11 +57,12 @@ class Edit extends Component
     {
         $this->doc                 = $doc;
         $this->national_id_card_no = $this->doc->nationalIdCardNo()->pluck('id')->toArray();
+        $this->trip_type           = $this->doc->tripType()->pluck('id')->toArray();
+        $this->doctype             = $this->doc->doctype()->pluck('id')->toArray();
         $this->initListsForFields();
         $this->mediaCollections = [
 
             'doc_upload' => $doc->upload,
-            'doc_photo'  => $doc->photo,
         ];
     }
 
@@ -71,6 +77,8 @@ class Edit extends Component
 
         $this->doc->save();
         $this->doc->nationalIdCardNo()->sync($this->national_id_card_no);
+        $this->doc->tripType()->sync($this->trip_type);
+        $this->doc->doctype()->sync($this->doctype);
         $this->syncMedia();
 
         return redirect()->route('admin.docs.index');
@@ -87,24 +95,27 @@ class Edit extends Component
                 'integer',
                 'exists:members_managements,id',
             ],
-            'doc.doc_type_id' => [
+            'trip_type' => [
+                'required',
+                'array',
+            ],
+            'trip_type.*.id' => [
+                'integer',
+                'exists:trips,id',
+            ],
+            'doctype' => [
+                'required',
+                'array',
+            ],
+            'doctype.*.id' => [
                 'integer',
                 'exists:documents,id',
-                'nullable',
             ],
             'mediaCollections.doc_upload' => [
                 'array',
-                'nullable',
+                'required',
             ],
             'mediaCollections.doc_upload.*.id' => [
-                'integer',
-                'exists:media,id',
-            ],
-            'mediaCollections.doc_photo' => [
-                'array',
-                'nullable',
-            ],
-            'mediaCollections.doc_photo.*.id' => [
                 'integer',
                 'exists:media,id',
             ],
@@ -114,6 +125,7 @@ class Edit extends Component
     protected function initListsForFields(): void
     {
         $this->listsForFields['national_id_card_no'] = MembersManagement::pluck('national_id_card_no', 'id')->toArray();
-        $this->listsForFields['doc_type']            = Document::pluck('type', 'id')->toArray();
+        $this->listsForFields['trip_type']           = Trip::pluck('trip_type', 'id')->toArray();
+        $this->listsForFields['doctype']             = Document::pluck('type', 'id')->toArray();
     }
 }

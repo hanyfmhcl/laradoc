@@ -20,19 +20,17 @@ class DocApiController extends Controller
     {
         abort_if(Gate::denies('doc_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DocResource(Doc::with(['nationalIdCardNo', 'docType'])->get());
+        return new DocResource(Doc::with(['nationalIdCardNo', 'tripType', 'doctype', 'owner'])->get());
     }
 
     public function store(StoreDocRequest $request)
     {
         $doc = Doc::create($request->validated());
         $doc->nationalIdCardNo()->sync($request->input('nationalIdCardNo', []));
-        foreach ($request->input('doc_upload', []) as $file) {
-            $doc->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('doc_upload');
-        }
-
-        foreach ($request->input('doc_photo', []) as $file) {
-            $doc->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('doc_photo');
+        $doc->tripType()->sync($request->input('tripType', []));
+        $doc->doctype()->sync($request->input('doctype', []));
+        if ($request->input('doc_upload', false)) {
+            $doc->addMedia(storage_path('tmp/uploads/' . basename($request->input('doc_upload'))))->toMediaCollection('doc_upload');
         }
 
         return (new DocResource($doc))
@@ -44,39 +42,24 @@ class DocApiController extends Controller
     {
         abort_if(Gate::denies('doc_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DocResource($doc->load(['nationalIdCardNo', 'docType']));
+        return new DocResource($doc->load(['nationalIdCardNo', 'tripType', 'doctype', 'owner']));
     }
 
     public function update(UpdateDocRequest $request, Doc $doc)
     {
         $doc->update($request->validated());
         $doc->nationalIdCardNo()->sync($request->input('nationalIdCardNo', []));
-        if (count($doc->doc_upload) > 0) {
-            foreach ($doc->doc_upload as $media) {
-                if (! in_array($media->file_name, $request->input('doc_upload', []))) {
-                    $media->delete();
+        $doc->tripType()->sync($request->input('tripType', []));
+        $doc->doctype()->sync($request->input('doctype', []));
+        if ($request->input('doc_upload', false)) {
+            if (! $doc->doc_upload || $request->input('doc_upload') !== $doc->doc_upload->file_name) {
+                if ($doc->doc_upload) {
+                    $doc->doc_upload->delete();
                 }
+                $doc->addMedia(storage_path('tmp/uploads/' . basename($request->input('doc_upload'))))->toMediaCollection('doc_upload');
             }
-        }
-        $media = $doc->doc_upload->pluck('file_name')->toArray();
-        foreach ($request->input('doc_upload', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $doc->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('doc_upload');
-            }
-        }
-
-        if (count($doc->doc_photo) > 0) {
-            foreach ($doc->doc_photo as $media) {
-                if (! in_array($media->file_name, $request->input('doc_photo', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $doc->doc_photo->pluck('file_name')->toArray();
-        foreach ($request->input('doc_photo', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $doc->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('doc_photo');
-            }
+        } elseif ($doc->doc_upload) {
+            $doc->doc_upload->delete();
         }
 
         return (new DocResource($doc))

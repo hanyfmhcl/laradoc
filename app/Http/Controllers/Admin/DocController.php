@@ -35,7 +35,7 @@ class DocController extends Controller
     {
         abort_if(Gate::denies('doc_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $doc->load('nationalIdCardNo', 'docType');
+        $doc->load('nationalIdCardNo', 'tripType', 'doctype', 'owner');
 
         return view('admin.doc.show', compact('doc'));
     }
@@ -47,15 +47,6 @@ class DocController extends Controller
         if ($request->has('size')) {
             $this->validate($request, [
                 'file' => 'max:' . $request->input('size') * 1024,
-            ]);
-        }
-        if (request()->has('max_width') || request()->has('max_height')) {
-            $this->validate(request(), [
-                'file' => sprintf(
-                    'image|dimensions:max_width=%s,max_height=%s',
-                    request()->input('max_width', 100000),
-                    request()->input('max_height', 100000)
-                ),
             ]);
         }
 

@@ -65,6 +65,10 @@ class Create extends Component
                 'string',
                 'nullable',
             ],
+            'user.mobile_number' => [
+                'string',
+                'required',
+            ],
         ];
     }
 

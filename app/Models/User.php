@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Support\HasAdvancedFilter;
+use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Hash;
@@ -15,7 +16,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements HasLocalePreference
 {
-    use HasFactory, HasAdvancedFilter, Notifiable, SoftDeletes;
+    use HasFactory, HasAdvancedFilter, Notifiable, SoftDeletes, Auditable;
 
     public $table = 'users';
 
@@ -29,14 +30,7 @@ class User extends Authenticatable implements HasLocalePreference
         'email',
         'password',
         'locale',
-    ];
-
-    public $orderable = [
-        'id',
-        'name',
-        'email',
-        'email_verified_at',
-        'locale',
+        'mobile_number',
     ];
 
     protected $dates = [
@@ -46,6 +40,15 @@ class User extends Authenticatable implements HasLocalePreference
         'deleted_at',
     ];
 
+    public $orderable = [
+        'id',
+        'name',
+        'email',
+        'email_verified_at',
+        'locale',
+        'mobile_number',
+    ];
+
     public $filterable = [
         'id',
         'name',
@@ -53,6 +56,7 @@ class User extends Authenticatable implements HasLocalePreference
         'email_verified_at',
         'roles.title',
         'locale',
+        'mobile_number',
     ];
 
     public function getIsAdminAttribute()

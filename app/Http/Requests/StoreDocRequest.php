@@ -33,10 +33,21 @@ class StoreDocRequest extends FormRequest
                 'integer',
                 'exists:members_managements,id',
             ],
-            'doc_type_id' => [
+            'trip_type' => [
+                'required',
+                'array',
+            ],
+            'trip_type.*.id' => [
+                'integer',
+                'exists:trips,id',
+            ],
+            'doctype' => [
+                'required',
+                'array',
+            ],
+            'doctype.*.id' => [
                 'integer',
                 'exists:documents,id',
-                'nullable',
             ],
         ];
     }

@@ -9,8 +9,8 @@ class AddRelationshipFieldsToDocsTable extends Migration
     public function up()
     {
         Schema::table('docs', function (Blueprint $table) {
-            $table->unsignedBigInteger('doc_type_id')->nullable();
-            $table->foreign('doc_type_id', 'doc_type_fk_8149810')->references('id')->on('documents');
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->foreign('owner_id', 'owner_fk_8162068')->references('id')->on('users');
         });
     }
 }

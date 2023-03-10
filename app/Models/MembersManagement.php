@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Support\HasAdvancedFilter;
 use App\Traits\Auditable;
+use App\Traits\Tenantable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,9 +13,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MembersManagement extends Model
 {
-    use HasFactory, HasAdvancedFilter, SoftDeletes, Auditable;
+    use HasFactory, HasAdvancedFilter, SoftDeletes, Tenantable, Auditable;
 
     public $table = 'members_managements';
+
+    public static $search = [
+        'national_id_card_no',
+    ];
 
     protected $dates = [
         'created_at',
@@ -63,5 +68,10 @@ class MembersManagement extends Model
     public function getDeletedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('project.datetime_format')) : null;
+    }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class);
     }
 }

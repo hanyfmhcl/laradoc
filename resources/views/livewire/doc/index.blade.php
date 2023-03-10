@@ -48,14 +48,13 @@
                             {{ trans('cruds.doc.fields.national_id_card_no') }}
                         </th>
                         <th>
-                            {{ trans('cruds.doc.fields.doc_type') }}
-                            @include('components.table.sort', ['field' => 'doc_type.type'])
+                            {{ trans('cruds.doc.fields.trip_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.doc.fields.doctype') }}
                         </th>
                         <th>
                             {{ trans('cruds.doc.fields.upload') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.doc.fields.photo') }}
                         </th>
                         <th>
                         </th>
@@ -76,9 +75,14 @@
                                 @endforeach
                             </td>
                             <td>
-                                @if($doc->docType)
-                                    <span class="badge badge-relationship">{{ $doc->docType->type ?? '' }}</span>
-                                @endif
+                                @foreach($doc->tripType as $key => $entry)
+                                    <span class="badge badge-relationship">{{ $entry->trip_type }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($doc->doctype as $key => $entry)
+                                    <span class="badge badge-relationship">{{ $entry->type }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @foreach($doc->upload as $key => $entry)
@@ -86,13 +90,6 @@
                                         <i class="far fa-file">
                                         </i>
                                         {{ $entry['file_name'] }}
-                                    </a>
-                                @endforeach
-                            </td>
-                            <td>
-                                @foreach($doc->photo as $key => $entry)
-                                    <a class="link-photo" href="{{ $entry['url'] }}">
-                                        <img src="{{ $entry['thumbnail'] }}" alt="{{ $entry['name'] }}" title="{{ $entry['name'] }}">
                                     </a>
                                 @endforeach
                             </td>

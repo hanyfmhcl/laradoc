@@ -67,7 +67,7 @@ class Index extends Component
 
     public function render()
     {
-        $query = Doc::with(['nationalIdCardNo', 'docType'])->advancedFilter([
+        $query = Doc::with(['nationalIdCardNo', 'tripType', 'doctype', 'owner'])->advancedFilter([
             's'               => $this->search ?: null,
             'order_column'    => $this->sortBy,
             'order_direction' => $this->sortDirection,

@@ -64,6 +64,10 @@
                             @include('components.table.sort', ['field' => 'locale'])
                         </th>
                         <th>
+                            {{ trans('cruds.user.fields.mobile_number') }}
+                            @include('components.table.sort', ['field' => 'mobile_number'])
+                        </th>
+                        <th>
                         </th>
                     </tr>
                 </thead>
@@ -96,6 +100,9 @@
                             </td>
                             <td>
                                 {{ $user->locale }}
+                            </td>
+                            <td>
+                                {{ $user->mobile_number }}
                             </td>
                             <td>
                                 <div class="flex justify-end">

@@ -17,7 +17,7 @@ class DocumentApiController extends Controller
     {
         abort_if(Gate::denies('document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DocumentResource(Document::all());
+        return new DocumentResource(Document::with(['owner'])->get());
     }
 
     public function store(StoreDocumentRequest $request)
@@ -33,7 +33,7 @@ class DocumentApiController extends Controller
     {
         abort_if(Gate::denies('document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DocumentResource($document);
+        return new DocumentResource($document->load(['owner']));
     }
 
     public function update(UpdateDocumentRequest $request, Document $document)
